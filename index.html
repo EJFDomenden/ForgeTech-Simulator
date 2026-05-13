@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <link rel="icon" type="image/png" href="/design/icon/ProductLogo.png">
+    <!-- Database -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/src/css/style.css">
+    <!-- JS -->
+    <!-- <script src="/supabase-config.js"></script> -->
+    <script type="text/javascript" src="/index.js" defer></script>
+</head>
+</body>
+</html>
+<body>
+    <header>
+        <div class="grp-nav">
+            <div class="logo">
+                <img src="/design/icon/ProductLogo.png" alt="web-app logo" title="ForgeTech Simulator"> FT Sim
+            </div>
+            <a id="menu-icon" class="menu-icon" onclick="onMenuClick()">
+            <i class="fa fa-bars"></i>
+            </a>
+            <div id="navigation-bar" class="nav-bar">
+                <li><a class="nav-link active" data-page="home">Home</a></li>
+                <li><a class="nav-link" data-page="simulators">Simulation</a></li>
+                <li><a class="nav-link" data-page="learning-paths">Modules</a></li>
+                <li><a class="nav-link" data-page="contact">Contact</a></li>
+                <li><a class="nav-link" data-page="pricing">Pricing</a></li>
+        </div>
+    </div>
+    <div class="btn-bar">
+        <!-- THEME TOGGLE -->
+        <button id="theme-toggle" class="btn-theme-toggle" aria-label="Toggle Light/Dark Theme">
+            <svg id="icon-sun" class="theme-icon sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg id="icon-moon" class="theme-icon moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+        </button>
+
+        <button id="btn_signOut">Sign Out</button>
+        <button id="btn_GetStarted" href="/pages/sim/sandbox.html">Get Started</button>
+    </div>
+    </header>
+
+    <main id="page-container">
+        <!-- HOME PAGE -->
+        <div class="page active" id="home">
+            <section class="hero">
+                <h1>Welcome to ForgeTech Simulator</h1>
+                <p class="subtitle">Master Hardware Architecture Through Interactive 3D Simulation</p>
+                <div class="cta-buttons">
+                    <button class="btn-primary" data-navigate="simulators">Start Learning</button>
+                    <button class="btn-secondary" data-navigate="learning-paths">View Learning Paths</button>
+                </div>
+            </section>
+
+            <section class="platform-overview">
+                <h2>What is ForgeTech Simulator?</h2>
+                <p>ForgeTech Simulator is an innovative digital learning platform designed to teach hardware component architecture through hands-on 3D simulation. Learn by doing—assemble, modify, and understand the intricate details of computer hardware at the component level.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Interactive 3D Models</h3>
+                        <p>Explore hardware components in detailed 3D environments with realistic assembly mechanics</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Component-Level Learning</h3>
+                        <p>Understand architecture from memory chips and capacitors to complete modules</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Guided Tutorials</h3>
+                        <p>Step-by-step learning paths designed for beginners through advanced learners</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Practical Skills</h3>
+                        <p>Learn to modify, repair, and optimize hardware components with confidence</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="current-focus">
+                <h2>Current Focus: DDR4 RAM Architecture</h2>
+                <p>Our flagship simulator focuses on DDR4 memory module construction, teaching you:</p>
+                <ul>
+                    <li>Memory chip placement and configuration</li>
+                    <li>Serial Presence Detect (SPD) chip integration</li>
+                    <li>Transistor-level understanding</li>
+                    <li>Signal routing and timing considerations</li>
+                    <li>Comparison with other DDR generations (DDR3, DDR5)</li>
+                </ul>
+                <button class="btn-primary" data-navigate="simulators">Try DDR4 Simulator</button>
+            </section>
+
+            <section class="roadmap">
+                <h2>Coming Soon</h2>
+                <div class="roadmap-items">
+                    <div class="roadmap-card">
+                        <h3>SSD Architecture Simulator</h3>
+                        <p>NAND flash organization, controller integration, wear leveling</p>
+                    </div>
+                    <div class="roadmap-card">
+                        <h3>HDD Mechanics Simulator</h3>
+                        <p>Platter assembly, read/write heads, actuator mechanisms</p>
+                    </div>
+                    <div class="roadmap-card">
+                        <h3>Additional Components</h3>
+                        <p>CPUs, GPUs, motherboard architecture, and more</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- LEARNING PATHS PAGE -->
+        <div class="page" id="learning-paths">
+            <h1>Learning Paths</h1>
+            <p class="page-intro">Structured curriculum designed to take you from fundamentals to advanced hardware knowledge</p>
+
+            <div class="learning-path">
+                <div class="path-header beginner">
+                    <h2>Beginner: Memory Fundamentals</h2>
+                    <span class="duration">Estimated Time: 4-6 hours</span>
+                </div>
+                <div class="path-content">
+                    <h3>What You'll Learn:</h3>
+                    <ul>
+                        <li>Basic concepts of computer memory and data storage</li>
+                        <li>Difference between volatile and non-volatile memory</li>
+                        <li>Introduction to RAM architecture and function</li>
+                        <li>Memory hierarchy: Cache, RAM, Storage</li>
+                        <li>Understanding memory specifications (capacity, speed, latency)</li>
+                    </ul>
+                    <h3>Modules:</h3>
+                    <ol>
+                        <li>Introduction to Digital Memory</li>
+                        <li>How RAM Works: The Basics</li>
+                        <li>Memory Module Anatomy</li>
+                        <li>Reading Memory Specifications</li>
+                        <li>Practical Exercise: Identify RAM Components</li>
+                    </ol>
+                    <button class="btn-primary">Start Beginner Path</button>
+                </div>
+            </div>
+
+            <div class="learning-path">
+                <div class="path-header intermediate">
+                    <h2>Intermediate: DDR4 Deep Dive</h2>
+                    <span class="duration">Estimated Time: 8-10 hours</span>
+                </div>
+                <div class="path-content">
+                    <h3>Prerequisites:</h3>
+                    <p>Completion of Beginner path or equivalent knowledge</p>
+                    <h3>What You'll Learn:</h3>
+                    <ul>
+                        <li>DDR4 architecture and design principles</li>
+                        <li>Memory chip types and configurations (x4, x8, x16)</li>
+                        <li>SPD (Serial Presence Detect) chip function and programming</li>
+                        <li>Signal integrity and PCB design considerations</li>
+                        <li>Rank organization and dual-channel operation</li>
+                        <li>Timing parameters and overclocking basics</li>
+                    </ul>
+                    <h3>Modules:</h3>
+                    <ol>
+                        <li>DDR4 Standards and Specifications</li>
+                        <li>Component-by-Component Breakdown</li>
+                        <li>Memory Chip Organization</li>
+                        <li>SPD Programming and XMP Profiles</li>
+                        <li>Assembly Simulation: Build Your First Module</li>
+                        <li>Troubleshooting and Quality Control</li>
+                    </ol>
+                    <button class="btn-primary">Start Intermediate Path</button>
+                </div>
+            </div>
+
+            <div class="learning-path">
+                <div class="path-header advanced">
+                    <h2>Advanced: Multi-Generation Comparison</h2>
+                    <span class="duration">Estimated Time: 10-12 hours</span>
+                </div>
+                <div class="path-content">
+                    <h3>Prerequisites:</h3>
+                    <p>Completion of Intermediate path or equivalent professional experience</p>
+                    <h3>What You'll Learn:</h3>
+                    <ul>
+                        <li>Evolution from DDR3 to DDR5: Technical improvements</li>
+                        <li>Comparative analysis of different memory generations</li>
+                        <li>Power efficiency and voltage regulation</li>
+                        <li>Advanced timing optimization techniques</li>
+                        <li>Memory controller integration and compatibility</li>
+                        <li>Future trends in memory technology</li>
+                    </ul>
+                    <h3>Modules:</h3>
+                    <ol>
+                        <li>DDR3 vs DDR4 vs DDR5: Architecture Comparison</li>
+                        <li>Performance Analysis Across Generations</li>
+                        <li>Advanced Signal Integrity Concepts</li>
+                        <li>Memory Testing and Validation</li>
+                        <li>Professional-Grade Modification Techniques</li>
+                        <li>Capstone Project: Design Your Own Configuration</li>
+                    </ol>
+                    <button class="btn-primary">Start Advanced Path</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIMULATORS PAGE -->
+        <div class="page" id="simulators">
+            <h1>Interactive Simulators</h1>
+            <p class="page-intro">Hands-on learning through realistic 3D hardware simulation</p>
+
+            <section class="featured-simulator">
+                <div class="simulator-badge">Featured</div>
+                <h2>DDR4 RAM Builder</h2>
+                <p class="simulator-description">Our flagship simulator provides comprehensive, interactive learning of DDR4 memory architecture. Assemble a complete DDR4 module from individual components with real-time feedback and guidance.</p>
+                
+                <div class="simulator-features">
+                    <h3>Features:</h3>
+                    <ul>
+                        <li><strong>Component Assembly Mode:</strong> Place and configure memory chips, SPD, capacitors, and resistors</li>
+                        <li><strong>Interactive 3D Model:</strong> Rotate, zoom, and examine components from every angle</li>
+                        <li><strong>Guided Learning Mode:</strong> Step-by-step tutorials with tooltips and explanations</li>
+                        <li><strong>Free Build Mode:</strong> Experiment with different configurations</li>
+                        <li><strong>Validation System:</strong> Real-time checks for correct placement and compatibility</li>
+                        <li><strong>Multi-Generation View:</strong> Compare DDR4 with DDR3 and DDR5 designs</li>
+                    </ul>
+                </div>
+
+                <div class="simulator-modes">
+                    <div class="mode-card">
+                        <h3>Beginner Mode</h3>
+                        <p>Guided assembly with hints and automatic component highlighting</p>
+                        <button class="btn-primary" onclick="alert('Launch DDR4 Simulator - Beginner Mode')">Launch</button>
+                    </div>
+                    <div class="mode-card">
+                        <h3>Standard Mode</h3>
+                        <p>Build with basic guidance and validation checks</p>
+                        <button class="btn-primary" onclick="alert('Launch DDR4 Simulator - Standard Mode')">Launch</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="coming-soon-sims">
+                <h2>Coming Soon</h2>
+                <div class="future-simulators">
+                    <div class="future-sim-card">
+                        <div class="sim-status">In Development</div>
+                        <h3>SSD Architecture Simulator</h3>
+                        <p>Learn NAND flash organization, controller integration, FTL (Flash Translation Layer), wear leveling algorithms, and SSD performance optimization.</p>
+                        <span class="release-date">Expected: Q3 2026</span>
+                    </div>
+                    <div class="future-sim-card">
+                        <div class="sim-status">Planned</div>
+                        <h3>HDD Mechanics Simulator</h3>
+                        <p>Understand mechanical hard drive construction: platter assembly, spindle motors, actuator arms, read/write heads, and magnetic recording principles.</p>
+                        <span class="release-date">Expected: Q4 2026</span>
+                    </div>
+                    <div class="future-sim-card">
+                        <div class="sim-status">Planned</div>
+                        <h3>CPU Architecture Simulator</h3>
+                        <p>Explore processor design, die layout, core organization, cache hierarchy, and heat management solutions.</p>
+                        <span class="release-date">Expected: 2027</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="user-workspace">
+                <h2>Your Saved Simulations</h2>
+                <p>Access your saved projects and continue where you left off</p>
+                <div class="saved-sims-placeholder">
+                    <p>No saved simulations yet. Start building to save your progress!</p>
+                    <button class="btn-secondary">View All Saved Work</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- ACCOUNT PAGE -->
+        <div class="page" id="account">
+            <h1>Account & Settings</h1>
+            <p class="page-intro">Manage your profile, track progress, and customize your experience</p>
+
+            <section class="profile-section">
+                <h2>Profile & Progress</h2>
+                <div class="profile-overview">
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            [Avatar]
+                        </div>
+                        <div class="profile-info">
+                            <h3>Username</h3>
+                            <p>Member since: January 2026</p>
+                            <button class="btn-secondary">Edit Profile</button>
+                        </div>
+                    </div>
+
+                    <div class="progress-stats">
+                        <h3>Learning Progress</h3>
+                        <div class="stat-row">
+                            <span>Completed Learning Paths:</span>
+                            <strong>0 / 3</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>Simulator Hours:</span>
+                            <strong>0h</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>Exercises Completed:</span>
+                            <strong>0</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>Average Quiz Score:</span>
+                            <strong>--%</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>Projects Completed:</span>
+                            <strong>0</strong>
+                        </div>
+                    </div>
+
+                    <div class="achievements">
+                        <h3>Achievements & Badges</h3>
+                        <div class="badges-grid">
+                            <div class="badge locked">
+                                <span>🔒</span>
+                                <p>First Build</p>
+                            </div>
+                            <div class="badge locked">
+                                <span>🔒</span>
+                                <p>Memory Expert</p>
+                            </div>
+                            <div class="badge locked">
+                                <span>🔒</span>
+                                <p>Perfect Score</p>
+                            </div>
+                            <div class="badge locked">
+                                <span>🔒</span>
+                                <p>Community Helper</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h2>Settings</h2>
+                
+                <div class="setting-group">
+                    <h3>Learning Preferences</h3>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" checked>
+                            Enable tooltips and hints in simulator
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" checked>
+                            Auto-save simulation progress
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox">
+                            Show advanced technical details by default
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>Default Simulator Mode:</label>
+                        <select>
+                            <option>Beginner Mode</option>
+                            <option selected>Standard Mode</option>
+                            <option>Expert Mode</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Notifications</h3>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" checked>
+                            Email notifications for forum replies
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" checked>
+                            New feature announcements
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox">
+                            Weekly progress summary
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Privacy</h3>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" checked>
+                            Show my profile in showcase gallery
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox">
+                            Allow others to view my progress
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <h3>Display</h3>
+                    <div class="setting-item">
+                        <label>Theme:</label>
+                        <select>
+                            <option>Light</option>
+                            <option>Dark</option>
+                            <option selected>Auto</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Language:</label>
+                        <select>
+                            <option selected>English</option>
+                            <option>Spanish</option>
+                            <option>Chinese</option>
+                            <option>Japanese</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn-primary">Save Settings</button>
+            </section>
+
+            <section class="subscription-section">
+                <h2>Subscription & Billing</h2>
+                <div class="subscription-info">
+                    <p><strong>Current Plan:</strong> Free Tier</p>
+                    <p>Access to DDR4 simulator and basic learning materials</p>
+                    <button class="btn-primary">Upgrade to Premium</button>
+                </div>
+                <div class="premium-features">
+                    <h3>Premium Features (Coming Soon):</h3>
+                    <ul>
+                        <li>Early access to new simulators (SSD, HDD, etc.)</li>
+                        <li>Unlimited saved simulations</li>
+                        <li>Advanced analytics and progress tracking</li>
+                        <li>Exclusive community events and workshops</li>
+                        <li>Certificate of completion for learning paths</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- CONTACT PAGE -->
+    <div id="contact" class="page">
+    <section class="contact-section">
+        <h1 class="page-title">Get in Touch</h1>
+        <p class="page-subtitle">Questions, feedback, or partnership inquiries? We're here to help.</p>
+        <div class="contact-grid">
+        <div class="contact-form-card">
+            <form id="contact-form" class="tech-form">
+            <div class="form-group">
+                <label for="contact-name">Name</label>
+                <input type="text" id="contact-name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact-email">Email</label>
+                <input type="email" id="contact-email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+                <label for="contact-subject">Subject</label>
+                <select id="contact-subject">
+                <option value="general">General Inquiry</option>
+                <option value="support">Technical Support</option>
+                <option value="feedback">Feedback & Suggestions</option>
+                <option value="partnership">Partnership & Licensing</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="contact-message">Message</label>
+                <textarea id="contact-message" rows="5" placeholder="Tell us what's on your mind..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Send Message</button>
+            </form>
+        </div>
+        <div class="contact-info-card">
+            <h3>Quick Connect</h3>
+            <div class="info-item">
+            <span class="info-icon">📧</span>
+            <div><strong>Email</strong><p>support@forgetech.sim</p></div>
+            </div>
+            <div class="info-item">
+            <span class="info-icon">💬</span>
+            <div><strong>Discord Community</strong><p>discord.gg/forgetech</p></div>
+            </div>
+            <div class="info-item">
+            <span class="info-icon">📍</span>
+            <div><strong>Location</strong><p>Remote / Global</p></div>
+            </div>
+            <div class="response-time">
+            <p>⏱️ Average response time: <strong>24 hours</strong></p>
+            </div>
+        </div>
+        </div>
+    </section>
+    </div>
+
+    <!-- PRICING PAGE -->
+    <div id="pricing" class="page">
+    <section class="pricing-section">
+        <h1 class="page-title">Choose Your Plan</h1>
+        <p class="page-subtitle">Start free. Upgrade when you're ready to unlock advanced features.</p>
+        <div class="pricing-grid">
+        <!-- FREE TIER -->
+        <div class="pricing-card free-tier">
+            <div class="pricing-header">
+            <h3>Starter</h3>
+            <div class="price">$0<span>/mo</span></div>
+            <p>Perfect for learners & hobbyists</p>
+            </div>
+            <ul class="feature-list">
+            <li>✅ DDR4 RAM Simulator</li>
+            <li>✅ Beginner & Intermediate Paths</li>
+            <li>✅ 3 Saved Projects</li>
+            <li>✅ Community Forum Access</li>
+            <li class="disabled">❌ Advanced Analytics</li>
+            <li class="disabled">❌ Priority Support</li>
+            <li class="disabled">❌ Export to STEP/JSON</li>
+            </ul>
+            <button class="btn-secondary">Get Started Free</button>
+        </div>
+
+        <!-- PREMIUM TIER -->
+        <div class="pricing-card premium-tier">
+            <div class="pricing-badge">MOST POPULAR</div>
+            <div class="pricing-header">
+            <h3>Pro Builder</h3>
+            <div class="price">$4.99<span>/mo</span></div>
+            <p>For serious engineers & students</p>
+            </div>
+            <ul class="feature-list">
+            <li>✅ All Free Features</li>
+            <li>✅ Early Access: SSD & HDD Sims</li>
+            <li>✅ Unlimited Saved Projects</li>
+            <li>✅ Advanced Analytics Dashboard</li>
+            <li>✅ Priority Email & Discord Support</li>
+            <li>✅ Export to STEP/JSON/PDF</li>
+            <li>✅ Certificate of Completion</li>
+            </ul>
+            <button class="btn-primary">Upgrade to Pro</button>
+        </div>
+        </div>
+        <div class="pricing-footer">
+        <p>🔒 Secure payment via Stripe. Cancel anytime. 7-day money-back guarantee on Pro.</p>
+        </div>
+    </section>
+    </div>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>ForgeTech Simulator</h3>
+                <p>Interactive hardware education platform</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="#" data-navigate="home">Home</a></li>
+                    <li><a href="#" data-navigate="learning-paths">Learning Paths</a></li>
+                    <li><a href="#" data-navigate="simulators">Simulators</a></li>
+                    <li><a href="#" data-navigate="materials">Materials</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="#" data-navigate="community">Forum</a></li>
+                    <li><a href="#" data-navigate="community">Showcase</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Copyright & Attribution</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 ForgeTech Simulator. All rights reserved.</p>
+            <p class="attribution-notice">Technical specifications and standards are based on publicly available industry documentation. All trademarks are property of their respective owners.</p>
+        </div>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>

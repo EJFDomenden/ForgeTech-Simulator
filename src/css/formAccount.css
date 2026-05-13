@@ -1,0 +1,206 @@
+:root   {
+    --clr-accent-a0: #5eff9e;
+    --clr-base: white;
+    --clr-text: #2E2B41;
+    --clr-input: #F3F0FF
+    
+
+    /** Base colors */
+    --clr-dark-a0: #18181A;
+    --clr-light-a0: #E0E0E0;
+
+    /** Theme primary colors */
+    --clr-primary-a0: #0057ff;
+    --clr-primary-a10: #4c68ff;
+    --clr-primary-a20: #6d79ff;
+    --clr-primary-a30: #878bff;
+    --clr-primary-a40: #9e9dff;
+    --clr-primary-a50: #b3b0ff;
+
+    /** Theme surface colors */
+    --clr-surface-a0: #000000;
+    --clr-surface-a10: #1e1e1e;
+    --clr-surface-a20: #353535;
+    --clr-surface-a30: #4e4e4e;
+    --clr-surface-a40: #696969;
+    --clr-surface-a50: #858585;
+
+    /** Theme tonal surface colors */
+    --clr-surface-tonal-a0: #0f0d1c;
+    --clr-surface-tonal-a10: #252431;
+    --clr-surface-tonal-a20: #3c3b47;
+    --clr-surface-tonal-a30: #55545f;
+    --clr-surface-tonal-a40: #6f6e77;
+    --clr-surface-tonal-a50: #8a8991;
+
+        /** Success colors */
+        --clr-success-a0: #34d399;
+        --clr-success-a10: #88e5c3;
+        --clr-success-a20: #dcf7ed;
+
+        /** Warning colors */
+        --clr-warning-a0: #fbbf24;
+        --clr-warning-a10: #fddc88;
+        --clr-warning-a20: #fffaec;
+
+        /** Danger colors */
+        --clr-danger-a0: #f04343;
+        --clr-danger-a10: #f8a1a1;
+        --clr-danger-a20: #ffffff;
+
+        /** Info colors */
+        --clr-info-a0: #5eff9e;
+        --clr-info-a10: #c4ffdb;
+        --clr-info-a20: #ffffff;
+
+  --accent-color: #8672FF;
+  --base-color: white;
+  --text-color: #2E2B41;
+  --input-color: #F3F0FF;
+}
+
+.lightmode   { 
+    --base-color: #111; /* None */
+}
+
+*   {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    color: var(--clr-text);
+    text-align: center;
+    font-family: Poppins, Segoe UI, sans-serif;
+    font-size: 12pt;
+}
+
+body    {
+    min-height: 100vh;
+    background-image: url(/design/form/acc_bckgrnd.jpg);
+    background-size: cover;
+    background-position: right;
+    overflow: hidden;
+}
+
+/*  ACCOUNTFORM---ACCOUNTFORM---ACCOUNTFORM 
+    ACCOUNTFORM---ACCOUNTFORM---ACCOUNTFORM 
+    ACCOUNTFORM---ACCOUNTFORM---ACCOUNTFORM */
+.view {
+    display: none;
+    background-color: var(--base-color);
+    border-radius: 0 48px 48px 0;
+    padding: 10px;
+    box-sizing: border-box;
+    width: max(40%, 600px);
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.view.active {
+    display: flex;
+}
+
+h1{
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+form{
+  width: min(400px, 100%);
+  margin-top: 20px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+form > div{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+form label{
+  flex-shrink: 0;
+  height: 50px;
+  width: 50px;
+  background-color: var(--accent-color);
+  fill: var(--base-color);
+  color: var(--base-color);
+  border-radius: 10px 0 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+form input{
+  box-sizing: border-box;
+  flex-grow: 1;
+  min-width: 0;
+  height: 50px;
+  padding: 1em;
+  font: inherit;
+  border-radius: 0 10px 10px 0;
+  border: 2px solid var(--input-color);
+  border-left: none;
+  background-color: var(--input-color);
+  transition: 150ms ease;
+}
+form input:hover{
+  border-color: var(--accent-color);
+}
+form input:focus{
+  outline: none;
+  border-color: var(--text-color);
+}
+div:has(input:focus) > label{
+  background-color: var(--text-color);
+}
+form input::placeholder{
+  color: var(--text-color);
+}
+form button{
+  margin-top: 10px;
+  border: none;
+  border-radius: 1000px;
+  padding: .85em 4em;
+  background-color: var(--accent-color);
+  color: var(--base-color);
+  font: inherit;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: 150ms ease;
+}
+form button:hover{
+  background-color: var(--text-color);
+}
+form button:focus{
+  outline: none;
+  background-color: var(--text-color);
+}
+a{
+  text-decoration: none;
+  color: var(--accent-color);
+}
+a:hover{
+  text-decoration: underline;
+}
+@media(max-width: 1100px){
+  .view {
+    width: min(600px, 100%);
+    border-radius: 0;
+  }
+}
+form div.incorrect label{
+  background-color: #f06272;
+}
+form div.incorrect input{
+  border-color: #f06272;
+}
+#error-message{
+  color:#f06272;
+}

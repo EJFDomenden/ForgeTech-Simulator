@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Account</title>
+  <link rel="icon" type="image/png" href="/design/icon/ProductLogo.png">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/src/css/formAccount.css">
+  <!-- Database -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Form Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/src/css/formAccount.css">
+  <!-- JS -->
+  <script type="text/javascript" src="/src/javascripts/account/auth.js" defer></script>
+  <script type="text/javascript" src="/src/javascripts/account/formAccount.js" defer></script>
+  <!-- <script src="/supabase-config.js"></script> -->
+</head>
+<body>
+  <section id="grp_login" class="view active">
+    <h1>Login</h1>
+    <p id="error-message"></p>
+    <form id="frm_login">
+      <div>
+        <label for="email-input">
+          <span>@</span>
+        </label>
+        <input type="email" name="email" id="email-input" class="inp_email" placeholder="Email">
+      </div>
+      <div>
+        <label for="password-input">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/></svg>
+        </label>
+        <input type="password" name="password" id="password-input" class="inp_password" placeholder="Password">
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p>New here? <a href="#" id="go-to-signup">Create an Account</a></p>
+  </section>
+
+  <section id="grp_signup" class="view">
+    <h1>Signup</h1>
+    <p id="error-message"></p>
+    <form id="frm_signup">
+      <!-- <div>
+        <label for="firstname-input">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
+        </label>
+        <input type="text" name="firstname" id="firstname-input" placeholder="Firstname">
+      </div> -->
+      <div>
+        <label for="email-input">
+          <span>@</span>
+        </label>
+        <input type="email" name="email" id="email-input" class="inp_email" placeholder="Email">
+      </div>
+      <div>
+        <label for="password-input">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/></svg>
+        </label>
+        <input type="password" name="password" id="password-input" class="inp_password" placeholder="Password">
+      </div>
+      <div>
+        <label for="repeat-password-input">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M240-80q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640h40v-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240Zm240-200q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM360-640h240v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85v80Z"/></svg>
+        </label>
+        <input type="password" name="repeat-password" id="repeat-password-input" class="inp_repeatpassword" placeholder="Repeat Password">
+      </div>
+      <button type="submit">Signup</button>
+    </form>
+    <p>Already have an Account? <a href="#" id="go-to-login">Login</a> </p>
+  </section>
+</body>
+</html>

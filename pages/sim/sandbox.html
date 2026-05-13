@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForgeTech Simulator - Sandbox</title>
+    <link rel="stylesheet" href="/src/css/sandbox.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.184.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/",
+            "GLTFLoader": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/loaders/GLTFLoader.js",
+            "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.184.0/examples/jsm/controls/OrbitControls.js"
+        }
+    }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <canvas id="forge-canvas"></canvas>
+
+    <button id="test-ram-trigger" class="hex-btn left-trigger">
+        <div class="hex-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+        </div>
+    </button>
+
+    <button id="complib-trigger" class="hex-btn right-trigger">
+        <div class="hex-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+        </div>
+    </button>
+
+<div id="action-toolbar" class="ui-container center-bottom">
+        <div class="action-buttons simple-row">
+            <button id="btn-undo" class="simple-btn" title="Undo (Ctrl+Z)">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"></path><path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path></svg>
+            </button>
+            <button id="btn-delete" class="simple-btn danger-btn" title="Delete (Backspace/Del)">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>
+            </button>
+            <button id="btn-redo" class="simple-btn" title="Redo (Ctrl+Shift+Z)">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"></path><path d="M3 17a9 9 0 019-9 9 9 0 016 2.3l3 2.7"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="ui-container top-right">
+        <button id="hamburger-menu" class="hex-btn small-hex">
+            <div class="hex-inner">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </div>
+        </button>
+    </div>
+
+    
+    <div id="complib-popup" class="slide-panel bottom-panel">
+        <header class="panel-header">
+            <div class="header-left"><h2>Component Lib</h2></div>
+            <div class="complib-tabs" id="category-tabs">
+                <button class="tab-btn active" data-category="All">All</button>
+                <button class="tab-btn" data-category="Dummy RAM">Dummy RAM</button>
+                <button class="tab-btn" data-category="Memory Chip">Memory Chip</button>
+                <button class="tab-btn" data-category="SPD">SPD</button>
+                <button class="tab-btn" data-category="PMIC">PMIC</button>
+                <button class="tab-btn" data-category="Capacitor">Capacitor</button>
+                <button class="tab-btn" data-category="Resistor">Resistor</button>
+                <button class="tab-btn" data-category="Transistor">Transistor</button>
+            </div>
+            <div class="complib-mobile-dropup">
+                <select id="category-select" class="glass-select">
+                    <option value="All" selected>All</option>
+                    <option value="Dummy RAM">Dummy RAM</option>
+                    <option value="Memory Chip">Memory Chip</option>
+                    <option value="SPD">SPD</option>
+                    <option value="PMIC">PMIC</option>
+                    <option value="Capacitor">Capacitor</option>
+                    <option value="Resistor">Resistor</option>
+                    <option value="Transistor">Transistor</option>
+                </select>
+            </div>
+            <button class="close-btn">&times;</button>
+        </header>
+        <div class="complib-content" id="complib-grid">
+            <div class="placeholder-text">Hardware loading...</div>
+        </div>
+    </div>
+
+    <div id="test-ram-panel" class="slide-panel left-panel test-panel">
+        <div class="panel-header">
+            <h2>🧪 DDR4 Validation</h2>
+            <button id="close-test-panel" class="close-btn">&times;</button>
+        </div>
+        <div class="panel-content">
+            <div id="test-results" class="test-results">
+                <div class="placeholder-msg">Click <strong>RUN DIAGNOSTIC</strong> after assembling your RAM module.</div>
+            </div>
+            <button id="run-test-btn" class="action-btn" style="margin-top: 16px;">RUN DIAGNOSTIC</button>
+        </div>
+    </div>
+
+    <div id="main-menu-overlay" class="fullscreen-overlay hidden">
+        <div class="overlay-backdrop"></div> 
+        <aside class="menu-sidebar glass-panel">
+            <header class="menu-header">
+                <h2>ForgeTech Menu</h2>
+                <button id="close-main-menu" class="close-btn">&times;</button>
+            </header>
+            
+            <div class="menu-scroll-area">
+                <div class="menu-options">
+                    <button id="menu-save" class="action-btn">Save Project <span class="hotkey">Ctrl+S</span></button>
+                    <button id="menu-load" class="action-btn">Load Project</button>
+                    <button id="menu-new" class="action-btn">New Project</button>
+                    <div class="menu-divider"></div>
+                    
+                    <button id="btn-controls-toggle" class="action-btn controls-btn">
+                        View Camera Controls <span class="toggle-arrow">▼</span>
+                    </button>
+                    <div id="controls-list" class="controls-inline hidden">
+                        <p><strong>Left Click:</strong> Select / Place</p>
+                        <p><strong>Right Click:</strong> Orbit Camera</p>
+                        <p><strong>Middle Click:</strong> Pan Camera</p>
+                        <p><strong>Scroll:</strong> Zoom</p>
+                        <p><strong>Reset Scene:</strong> Ctrl+R</p>
+                        <p><strong>Toggle Grid:</strong> Shift+T</p>
+                    </div>
+
+                    <div class="menu-divider"></div>
+                    <button id="menu-home" class="action-btn" href="/index.html">Return to Home</button>
+                    <div class="menu-divider"></div>
+                    
+                    <div class="theme-switch-row">
+                        <span class="theme-label">Frutiger Aero Theme</span>
+                        <label class="aero-toggle">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="aero-slider">
+                            <span class="aero-knob"></span>
+                            </span>
+                        </label>
+                        </div>
+                        <div class="menu-divider"></div>
+                    </div>
+            </div>
+
+            <footer class="menu-auth-footer">
+                <div class="auth-info">
+                    <div class="auth-avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="auth-details">
+                        <span class="auth-name">Technician_01</span>
+                        <span class="auth-status">Signed In</span>
+                    </div>
+                </div>
+                <button id="menu-signout" class="text-btn danger-text">Sign Out</button>
+            </footer>
+            <input type="file" id="file-input-load" accept=".json" style="display: none;">
+        </aside>
+    </div>
+
+    <div id="warning-toast" class="notification-overlay">
+        <div class="warning-content">
+            <svg class="warning-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <p class="warning-text"></p>
+            <button class="dismiss-btn">&times;</button>
+        </div>
+    </div>
+
+    <script type="module" src="/src/database/db-complib.js"></script>
+    <script type="module" src="/src/javascripts/sim/complib.js"></script>
+    <script type="module" src="/src/javascripts/sim/renderer.js"></script>
+    <script type="module" src="/src/javascripts/sim/sandbox.js"></script>
+    <script type="module" src="/src/javascripts/sim/menu.js"></script>
+    <script type="module" src="/src/javascripts/sim/testTech.js"></script>
+</body>
+</html>
